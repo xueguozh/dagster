@@ -94,6 +94,15 @@ def test_hello_world_with_config():
 
 
 @pytest.mark.notebook_test
+def test_hello_world_with_output_notebook():
+    with exec_for_test('define_hello_world_with_output_notebook_pipeline') as result:
+        assert result.success
+        assert (
+            'notebook' in result.result_for_solid('hello_world_with_output_notebook').output_values
+        )
+
+
+@pytest.mark.notebook_test
 def test_hello_world_with_config_escape():
     with exec_for_test(
         'define_hello_world_config_pipeline',
@@ -160,7 +169,6 @@ def test_hello_world_explicit_yield():
             x for x in result.event_list if x.event_type_value == 'STEP_MATERIALIZATION'
         ]
         assert len(materializations) == 2
-        assert get_path(materializations[0]).startswith('/tmp/dagstermill/')
         assert get_path(materializations[1]) == '/path/to/file'
 
 
