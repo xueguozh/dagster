@@ -73,6 +73,19 @@ def define_hello_world_config_pipeline():
     )
 
 
+def define_hello_world_with_output_notebook_solid():
+    return dagstermill.define_dagstermill_solid(
+        'hello_world_with_output_notebook', nb_test_path('hello_world'), output_notebook='notebook',
+    )
+
+
+def define_hello_world_with_output_notebook_pipeline():
+    return PipelineDefinition(
+        name='hello_world_with_output_notebook_pipeline',
+        solid_defs=[define_hello_world_with_output_notebook_solid()],
+    )
+
+
 def define_hello_world_with_output():
     return dagstermill.define_dagstermill_solid(
         'hello_world_output', nb_test_path('hello_world_output'), [], [OutputDefinition()]
